@@ -52,7 +52,8 @@ function! FoamFindName(start, end)
     let current += 1
   endwhile
 
-  return "NAME NOT FOUND"
+  " Default to vanilla Vim folding lines
+  return ''
 endfunction
 
 function! FoamIndents(indents)
@@ -90,10 +91,16 @@ function! FoamFoldTextInner(start, end)
   elseif thisline =~? '\v\s*\S+\s*:'
     return FoamIndents(1) . substitute(thisline, '\v\s*(\S+)\s*:.*', '\1', '')
   elseif thisline =~? '\v\s*(\}\s*,\s*){,1}\{'
-    return FoamIndents(2) . FoamFindName(a:start, a:end)
+    let name = FoamFindName(a:start, a:end)
+    if name == ''
+      return foldtext()
+    else
+      return FoamIndents(2) . name
+    endif
   endif
 
-  return "UNKNOWN STRUCTURE"
+  " Default to vanilla Vim folding lines
+  return foldtext()
 endfunction
 
 function! FoamFoldText()
