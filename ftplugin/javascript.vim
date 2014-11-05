@@ -87,7 +87,7 @@ function! FoamFoldTextInner(start, end)
       return FoamIndents(2) . substitute(thisline, '\v\s*(\S+)\s*:.*', '\1', '')
     endif
   elseif thisline =~? '\v\s*function\s+\S+\s*\('
-    return FoamIndents(2) . substitute(thisline, '\v\s*function\s+(\S+)\s*\(', '\1', '')
+    return FoamIndents(2) . substitute(thisline, '\v\s*function\s+(\S+)\s*\(.*', '\1', '')
   elseif thisline =~? '\v\s*\S+\s*:'
     return FoamIndents(1) . substitute(thisline, '\v\s*(\S+)\s*:.*', '\1', '')
   elseif thisline =~? '\v\s*(\}\s*,\s*){,1}\{'
